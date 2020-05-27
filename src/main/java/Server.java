@@ -3,6 +3,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class Server {
     private static final int PORT = 19000;
@@ -10,32 +11,39 @@ public class Server {
     public static void main(String[] args){
         ServerSocket serverSocket = null;
         try{
-            serverSocket = new ServerSocket(PORT);
+            serverSocket = new ServerSocket(Config.PORT);
             System.out.println("Started, waiting for connection");
-            Socket clientSocket = serverSocket.accept();
-            System.out.println("Accepted. " + clientSocket.getInetAddress());
 
-            try(InputStream in = clientSocket.getInputStream();
-                OutputStream out = clientSocket.getOutputStream()){
+            while (true) {
+                Socket clientSocket = null;
 
-                byte[] buf = new byte[32 * 1024];
-                int readBytes = in.read(buf);
-                String line = new String(buf, 0, readBytes);
-                System.out.printf("Client>%s", line);
+                while (clientSocket == null) {
+                    clientSocket = serverSocket.accept();
+                    System.out.println("\nAccepted. " + clientSocket.getInetAddress());
 
-                out.write(line.getBytes());
-                out.flush();
+                    try (InputStream in = clientSocket.getInputStream();
+                         OutputStream out = clientSocket.getOutputStream()) {
+
+                        byte[] buf = new byte[32 * 1024];
+                        int readBytes = in.read(buf);
+                        String line = new String(buf, 0, readBytes);
+                        System.out.printf("Client>%s", line);
+
+                        out.write(line.getBytes());
+                        out.flush();
+                    }
+                }
             }
-
+        } catch (SocketException e){
+            System.err.println("Socket exception");
+            e.printStackTrace();
         } catch (IOException e){
+            System.err.println("I/O exception");
             e.printStackTrace();
         }
 
 
     }
 
-    public static int printOlolo(){
-        return 10;
-    }
 
 }

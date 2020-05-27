@@ -5,19 +5,18 @@ import java.net.Socket;
 
 
 public class Client {
-    private static final int PORT = 19000;
     private static final String HOST = "localhost";
 
     public static void main(String[] args) {
 
         Socket clientSocket = null;
         try{
-            clientSocket = new Socket(HOST, PORT);
+            clientSocket = new Socket(Config.HOST, Config.PORT);
 
             try(InputStream in = clientSocket.getInputStream();
                 OutputStream out = clientSocket.getOutputStream()){
 
-                String line = "Hello";
+                String line = "Hello Cat";
                 out.write(line.getBytes());
                 out.flush();
 
