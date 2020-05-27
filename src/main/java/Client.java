@@ -8,7 +8,7 @@ public class Client {
     private static final int PORT = 19000;
     private static final String HOST = "localhost";
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         Socket clientSocket = null;
         try{
@@ -25,7 +25,6 @@ public class Client {
                 int readBytes = in.read(data);
 
                 System.out.printf("Server> %s", new String(data, 0, readBytes));
-
             }
 
         } catch (IOException e){
