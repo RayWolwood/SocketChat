@@ -14,8 +14,7 @@ public class Client {
         try{
             clientSocket = new Socket(Config.HOST, Config.PORT);
 
-            try(InputStream in = clientSocket.getInputStream();
-                OutputStream out = clientSocket.getOutputStream()){
+            try(OutputStream out = clientSocket.getOutputStream()){
 
                 //отправляем message
                 String massageString = "Hello, I'm a Client";
