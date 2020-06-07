@@ -2,9 +2,7 @@ package SocketChat.Server;
 
 import SocketChat.Config;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
@@ -14,28 +12,32 @@ public class Server {
 
         try(ServerSocket serverSocket = new ServerSocket(Config.PORT)){
 
-            System.out.println("Started, waiting for connection");
+            Socket clientSocket = serverSocket.accept();
+            System.out.println("\nAccepted. " + clientSocket.getInetAddress());
 
-            while (true) {
-                Socket clientSocket = null;
+            try (DataInputStream in = new DataInputStream(clientSocket.getInputStream());
+                 DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream())) {
 
-                while (clientSocket == null) {
-                    clientSocket = serverSocket.accept();
-                    System.out.println("\nAccepted. " + clientSocket.getInetAddress());
+                while (!clientSocket.isClosed()){
+                    String entry = in.readUTF();
+                    System.out.println("Client> " + entry);
 
-                    try (InputStream in = clientSocket.getInputStream();
-                         OutputStream out = clientSocket.getOutputStream()) {
-
-                        byte[] buf = new byte[32 * 1024];
-                        int readBytes = in.read(buf);
-                        String line = new String(buf, 0, readBytes);
-                        System.out.printf("Client> %s", line);
-
-                        out.write(line.getBytes());
+                    if(entry.equalsIgnoreCase("quit")){
+                        System.out.println("Client initialize connections suicide ...");
+                        out.writeUTF("Server reply - "+entry + " - OK");
                         out.flush();
+                        //Thread.sleep(3000);
+                        break;
                     }
+
+                    out.writeUTF("Server reply - "+entry + " - OK");
+                    out.flush();
                 }
+
+
             }
+
+
         } catch (SocketException e){
             System.err.println("Socket exception");
             e.printStackTrace();
