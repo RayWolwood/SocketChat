@@ -26,14 +26,12 @@ public class Server {
                         System.out.println("Client initialize connections suicide ...");
                         out.writeUTF("Server reply - "+entry + " - OK");
                         out.flush();
-                        //Thread.sleep(3000);
                         break;
                     }
 
                     out.writeUTF("Server reply - "+entry + " - OK");
                     out.flush();
                 }
-
 
             }
 

@@ -30,12 +30,6 @@ public class Client {
                 }
             }
 
-//                //отправляем message
-//                String massageString = "Hello, I'm a Client";
-//                out.write(massageString.getBytes());
-//                out.flush();
-
-
         } catch (IOException e){
             e.printStackTrace();
         }
