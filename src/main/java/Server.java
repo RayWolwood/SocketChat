@@ -6,10 +6,9 @@ import java.net.Socket;
 import java.net.SocketException;
 
 public class Server {
-    private static final int PORT = 19000;
-
     public static void main(String[] args){
         ServerSocket serverSocket = null;
+
         try{
             serverSocket = new ServerSocket(Config.PORT);
             System.out.println("Started, waiting for connection");
@@ -41,9 +40,5 @@ public class Server {
             System.err.println("I/O exception");
             e.printStackTrace();
         }
-
-
     }
-
-
 }

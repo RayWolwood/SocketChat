@@ -3,11 +3,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
-public class Config {
+class Config {
     private static final String PROPERTIES_FILE = "src/main/resources/config.properties";
 
-    public static int PORT;
-    public static String HOST;
+    static int PORT;
+    static String HOST;
 
     static {
         Properties properties = new Properties();
