@@ -1,3 +1,7 @@
+package SocketChat.Server;
+
+import SocketChat.Config;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -26,7 +30,7 @@ public class Server {
                         byte[] buf = new byte[32 * 1024];
                         int readBytes = in.read(buf);
                         String line = new String(buf, 0, readBytes);
-                        System.out.printf("Client>%s", line);
+                        System.out.printf("Client> %s", line);
 
                         out.write(line.getBytes());
                         out.flush();

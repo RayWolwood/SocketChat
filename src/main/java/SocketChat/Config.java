@@ -1,13 +1,15 @@
+package SocketChat;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
-class Config {
+public class Config {
     private static final String PROPERTIES_FILE = "src/main/resources/config.properties";
 
-    static int PORT;
-    static String HOST;
+    public static int PORT;
+    public static String HOST;
 
     static {
         Properties properties = new Properties();
