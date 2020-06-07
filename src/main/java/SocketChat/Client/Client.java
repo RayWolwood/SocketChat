@@ -9,12 +9,10 @@ import java.net.Socket;
 public class Client {
     public static void main(String[] args) {
 
-        Socket clientSocket = null;
-        try{
-            clientSocket = new Socket(Config.HOST, Config.PORT);
+
+        try(Socket clientSocket = new Socket(Config.HOST, Config.PORT)){
 
             try(OutputStream out = clientSocket.getOutputStream()){
-
                 //отправляем message
                 String massageString = "Hello, I'm a Client";
                 out.write(massageString.getBytes());

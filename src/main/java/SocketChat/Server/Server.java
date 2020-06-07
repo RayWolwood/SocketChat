@@ -11,10 +11,9 @@ import java.net.SocketException;
 
 public class Server {
     public static void main(String[] args){
-        ServerSocket serverSocket = null;
 
-        try{
-            serverSocket = new ServerSocket(Config.PORT);
+        try(ServerSocket serverSocket = new ServerSocket(Config.PORT)){
+
             System.out.println("Started, waiting for connection");
 
             while (true) {
