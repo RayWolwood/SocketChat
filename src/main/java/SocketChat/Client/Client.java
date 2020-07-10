@@ -6,32 +6,27 @@ import java.io.*;
 import java.net.Socket;
 
 public class Client {
+    private static BufferedWriter out;
+
     public static void main(String[] args) {
+        try {
+            try (Socket clientSocket = new Socket(Config.HOST, Config.PORT);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
 
+                out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
 
-        try(Socket clientSocket = new Socket(Config.HOST, Config.PORT);
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
-            DataInputStream in = new DataInputStream(clientSocket.getInputStream())){
+                System.out.print("> ");
+                String word = reader.readLine();
+                out.write(word + "\n");
+                out.flush();
 
-            System.out.println("Client connected to socket.");
-
-            while (!clientSocket.isOutputShutdown()){
-                if(br.ready()){
-                    String clientMessage = br.readLine();
-                    out.writeUTF(clientMessage);
-                    out.flush();
-
-                    if(clientMessage.equalsIgnoreCase("quit")){
-                        System.out.println("Client kill connection");
-                        break;
-                    }
-
-                }
+            } finally {
+                System.out.println("Клиент был закрыт...");
+                out.close();
             }
-
-        } catch (IOException e){
-            e.printStackTrace();
+        } catch (IOException e) {
+            System.err.println(e);
         }
+
     }
 }
