@@ -1,6 +1,7 @@
 package SocketChat.Client;
 
 import SocketChat.Config;
+import SocketChat.Message;
 
 import java.io.*;
 import java.net.Socket;
@@ -15,6 +16,7 @@ public class Client {
 
                 out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
 
+               // Message message = new Message();
                 System.out.print("> ");
                 String word = reader.readLine();
                 out.write(word + "\n");
