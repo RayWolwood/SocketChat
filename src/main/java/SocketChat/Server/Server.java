@@ -26,7 +26,6 @@ public class Server {
                     System.out.print("> ");
                     System.out.println(word);
 
-                    //out.write("Привет, это Сервер! Подтверждаю, вы написали : " + word + "\n");
                     out.flush();
 
                 } finally {
