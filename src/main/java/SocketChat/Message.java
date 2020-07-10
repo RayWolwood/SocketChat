@@ -1,7 +1,6 @@
 package SocketChat;
 
 import java.io.Serializable;
-import java.sql.Time;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -33,8 +32,8 @@ public class Message implements Serializable {
     }
 
     public String getDate(){
-        Time tm = new Time(this.time.getTime());
-        return tm.toString();
+        Date time = new Date(this.time.getTime());
+        return time.toString();
     }
 
 }
